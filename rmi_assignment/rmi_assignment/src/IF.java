@@ -1,5 +1,13 @@
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
-public interface IF extends Remote{
-    
+/*
+
+Classname: IF
+Comment: The remote interface.
+
+*/
+
+public interface IF extends Remote {
+	String helloWorld() throws RemoteException;
 }
