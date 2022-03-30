@@ -1,0 +1,40 @@
+/*
+Filename: HelloWorldClient.java
+*/
+
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import javax.swing.*;
+
+/*
+Classname: HelloWorldClient
+Comment: The RMI client.
+*/
+
+public class Client implements JFrame { 
+
+static String message = "blank";
+
+// The HelloWorld object "obj" is the identifier that is
+// used to refer to the remote object that implements
+// the HelloWorld interface.
+
+static IF obj = null;
+
+public static void main(String args[])
+{
+	try {
+		obj = (IF)Naming.lookup("//"
+				+ "localhost"
+				+ "/HelloWorld");
+		message = obj.helloWorld();
+		System.out.println("Message from the RMI-server was: \""
+				+ message + "\"");
+	}
+	catch (Exception e) {
+		System.out.println("HelloWorldClient exception: "
+				+ e.getMessage());
+		e.printStackTrace();
+	}
+}
+}
