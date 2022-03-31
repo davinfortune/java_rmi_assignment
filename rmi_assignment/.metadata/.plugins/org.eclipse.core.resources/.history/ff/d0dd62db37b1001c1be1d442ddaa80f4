@@ -38,12 +38,13 @@ public class Server extends UnicastRemoteObject
 			// Bind this object instance to the name "HelloServer".
 			// Include the following line if rmiregistry was not started on the command line
             Registry registry;
-            try {
-                registry = LocateRegistry.createRegistry( 6060 );
+            try{
+                registry = LocateRegistry.createRegistry( 1100 );
             } catch (RemoteException e) {
-                registry = LocateRegistry.getRegistry( 6060 );
+                registry = LocateRegistry.getRegistry( 1100 );
             }
 			 
+
 			// and replace the Naming.rebind() with the next line
 			registry.rebind( "HelloWorld", obj );
 		
@@ -51,7 +52,7 @@ public class Server extends UnicastRemoteObject
 			System.out.println("HelloWorld bound in registry");
 		}
 		catch (Exception e) {
-			System.out.println("Server error: " + e.getMessage());
+			System.out.println("HelloWorldServer error: " + e.getMessage());
 			e.printStackTrace();
 		}
 }

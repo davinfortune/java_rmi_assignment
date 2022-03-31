@@ -138,23 +138,23 @@ public static void main(String args[])
 
 
 		obj = (IF)Naming.lookup("//"
-				+ "localhost:6060"
+				+ "localhost"
 				+ "/HelloWorld");
 		message = obj.helloWorld();
 		System.out.println("Message from the RMI-server was: \""
 				+ message + "\"");
 	}
 	catch (Exception e) {
-		System.out.println("\n\n\n Client exception: \n\n\n"
+		System.out.println("HelloWorldClient exception: "
 				+ e.getMessage());
 		e.printStackTrace();
 	}
 }
 
 static boolean sumAction = false;
-static String firstPart = "";
-static String secondPart = "";
-static String arithmeticOperator = "";
+static String firstPart;
+static String secondPart;
+static String arithmeticOperator;
 
 private static class multiplyButton implements ActionListener {
 	@Override
@@ -315,8 +315,8 @@ private static class decimalButton implements ActionListener {
 private static class equalsButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		l.setText(l.getText() + "=");
-		System.out.println("FirstPart:" + firstPart + "\nSecondPart:" + secondPart + "\nOperator:" + arithmeticOperator);
+		l.setText(l.getText() + "equals");
+		System.out.println("FirstPart:" + firstPart + "\nSecondPart:" + secondPart);
 	}
 }
 
