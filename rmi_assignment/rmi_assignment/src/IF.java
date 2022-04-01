@@ -9,5 +9,5 @@ Comment: The remote interface.
 */
 
 public interface IF extends Remote {
-	String helloWorld() throws RemoteException;
+	Double calculation(Double firstPart,Double secondPart, String operator) throws RemoteException;
 }

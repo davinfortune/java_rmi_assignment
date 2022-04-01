@@ -23,15 +23,15 @@ public class Server extends UnicastRemoteObject
 		super();
 	}
 
-	public String helloWorld() {
-		System.out.println("Invocation to helloWorld was succesful!");
-		return "Hello World from RMI server!";
+	public Double calculation(Double firstPart,Double secondPart, String operator) {
+		System.out.println("Invocation to Calculation was succesful!" + "\nFirstpart:" + firstPart +"\nSecondpart:" + secondPart +"\nOperator:" + operator);
+		return 0.0;
 	}
 
 	public static void main(String args[]) {
 		try {
 
-			// Create an object of the HelloWorldServer class.
+			// Create an object of the CalculationServer class.
 		
 			Server obj = new Server();
 			
@@ -45,10 +45,10 @@ public class Server extends UnicastRemoteObject
             }
 			 
 			// and replace the Naming.rebind() with the next line
-			registry.rebind( "HelloWorld", obj );
+			registry.rebind( "Calculation", obj );
 		
-			// Naming.rebind("HelloWorld", obj);
-			System.out.println("HelloWorld bound in registry");
+			// Naming.rebind("Calculation", obj);
+			System.out.println("Calculation bound in registry");
 		}
 		catch (Exception e) {
 			System.out.println("Server error: " + e.getMessage());

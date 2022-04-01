@@ -16,19 +16,20 @@ public class Client{
 
 	static JFrame f;
  
-    // create a textfield
+
     static JTextField l;
  
-    // store operator and operands
+
     String s0, s1, s2;
 
-static String message = "blank";
+	static Double message = 0.0;
 
-// The HelloWorld object "obj" is the identifier that is
-// used to refer to the remote object that implements
-// the HelloWorld interface.
+	static boolean sumAction = false;
+	static String firstPart = "";
+	static String secondPart = "";
+	static String arithmeticOperator = "";
 
-static IF obj = null;
+	static IF obj = null;
 
 public static void main(String args[])
 {
@@ -126,23 +127,6 @@ public static void main(String args[])
  
         f.setSize(200, 220);
         f.show();
-		
-	
-
-
-
-
-
-
-
-
-
-		obj = (IF)Naming.lookup("//"
-				+ "localhost:6060"
-				+ "/HelloWorld");
-		message = obj.helloWorld();
-		System.out.println("Message from the RMI-server was: \""
-				+ message + "\"");
 	}
 	catch (Exception e) {
 		System.out.println("\n\n\n Client exception: \n\n\n"
@@ -150,11 +134,6 @@ public static void main(String args[])
 		e.printStackTrace();
 	}
 }
-
-static boolean sumAction = false;
-static String firstPart = "";
-static String secondPart = "";
-static String arithmeticOperator = "";
 
 private static class multiplyButton implements ActionListener {
 	@Override
@@ -316,7 +295,22 @@ private static class equalsButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		l.setText(l.getText() + "=");
-		System.out.println("FirstPart:" + firstPart + "\nSecondPart:" + secondPart + "\nOperator:" + arithmeticOperator);
+
+		try{
+			if(firstPart != "" && secondPart != "" && arithmeticOperator != ""){
+				obj = (IF)Naming.lookup("//"
+						+ "localhost:6060"
+						+ "/Calculation");
+				message = obj.calculation(Double.parseDouble(firstPart),Double.parseDouble(secondPart),arithmeticOperator);
+				System.out.println("Message from the RMI-server was: \""
+						+ message + "\"");
+			}
+		}
+		catch (Exception r) {
+			System.out.println("\n\n\n Client exception: \n\n\n"
+					+ r.getMessage());
+			r.printStackTrace();
+		}
 	}
 }
 
