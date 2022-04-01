@@ -1,0 +1,97 @@
+/*
+Filename: Server.java
+*/
+
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.RMISecurityManager;
+import java.rmi.server.UnicastRemoteObject;
+import javax.swing.*;
+import java.awt.event.*;
+
+// If you don't run the rmiregistry application from the command line
+// include the following import:
+import java.rmi.registry.*;
+
+/*
+Classname: Server
+Purpose: The RMI server.
+*/
+
+public class Server extends UnicastRemoteObject
+	implements IF {
+
+		
+	static JFrame f;
+ 
+
+    static JTextArea l;
+	
+	public Server() throws RemoteException {
+		super();
+	}
+
+	public Double calculation(Double firstPart,Double secondPart, String operator) {
+		System.out.println("Invocation to Calculation was succesful!" + "\nFirstpart:" + firstPart +"\nSecondpart:" + secondPart +"\nOperator:" + operator);
+		Double answer = 0.0;
+		if (operator.contains("x")) {
+			answer = firstPart*secondPart;
+		}
+		if (operator.contains("-")) {
+			answer = firstPart-secondPart;
+		}
+		if (operator.contains("+")) {
+			answer = firstPart+secondPart;
+		}
+		if (operator.contains("/")) {
+			answer = firstPart/secondPart;
+		}
+
+		return answer;
+	}
+
+	
+
+	public static void main(String args[]) {
+		try {
+
+			f = new JFrame("server");
+
+			l = new JTextArea(10,20);
+ 
+			l.setEditable(false);
+
+			JPanel p = new JPanel();
+			p.add(l);
+
+		
+			Server obj = new Server();
+			
+			// Bind this object instance to the name "HelloServer".
+			// Include the following line if rmiregistry was not started on the command line
+            Registry registry;
+            try {
+                registry = LocateRegistry.createRegistry( 6060 );
+            } catch (RemoteException e) {
+                registry = LocateRegistry.getRegistry( 6060 );
+            }
+			 
+			// and replace the Naming.rebind() with the next line
+			registry.rebind( "Calculation", obj );
+		
+			// Naming.rebind("Calculation", obj);
+			System.out.println("Calculation bound in registry");
+			l.appendText("Calculation bound in registry");
+
+			// add panel to frame
+			f.add(p);
+
+			f.setSize(200, 220);
+			f.show();
+		}
+		catch (Exception e) {
+			System.out.println("Server error: " + e.getMessage());
+			e.printStackTrace();
+		}
+}
+}

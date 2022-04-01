@@ -4,6 +4,8 @@ Filename: HelloWorldClient.java
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.server.ObjID;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -298,17 +300,43 @@ private static class equalsButton implements ActionListener {
 
 		try{
 			if(firstPart != "" && secondPart != "" && arithmeticOperator != ""){
-				obj = (IF)Naming.lookup("//"
-						+ "localhost:6060"
-						+ "/Calculation");
-				message = obj.calculation(Double.parseDouble(firstPart),Double.parseDouble(secondPart),arithmeticOperator);
-				System.out.println("Message from the RMI-server was: \""
-						+ message + "\"");
+				if(arithmeticOperator.contains("x")){
+					obj = (IF)Naming.lookup("//"
+					+ "localhost:6060"
+					+ "/Calculation");
+					message = obj.multCalculation(Double.parseDouble(firstPart),Double.parseDouble(secondPart));
+					System.out.println("Calculation: \"" + message + "\"");
+					l.setText(l.getText() + message);
+				}
+				if(arithmeticOperator.contains("+")){
+					obj = (IF)Naming.lookup("//"
+					+ "localhost:6060"
+					+ "/Calculation");
+					message = obj.addCalculation(Double.parseDouble(firstPart),Double.parseDouble(secondPart));
+					System.out.println("Calculation: \"" + message + "\"");
+					l.setText(l.getText() + message);
+					System.out.println(obj);
+				}
+				if(arithmeticOperator.contains("-")){
+					obj = (IF)Naming.lookup("//"
+					+ "localhost:6060"
+					+ "/Calculation");
+					message = obj.minusCalculation(Double.parseDouble(firstPart),Double.parseDouble(secondPart));
+					System.out.println("Calculation: \"" + message + "\"");
+					l.setText(l.getText() + message);
+				}
+				if(arithmeticOperator.contains("/")){
+					obj = (IF)Naming.lookup("//"
+					+ "localhost:6060"
+					+ "/Calculation");
+					message = obj.divCalculation(Double.parseDouble(firstPart),Double.parseDouble(secondPart));
+					System.out.println("Calculation: \"" + message + "\"");
+					l.setText(l.getText() + message);
+				}
 			}
 		}
 		catch (Exception r) {
-			System.out.println("\n\n\n Client exception: \n\n\n"
-					+ r.getMessage());
+			System.out.println("\n\n\n Client exception: \n\n\n" + r.getMessage());
 			r.printStackTrace();
 		}
 	}
